@@ -6,3 +6,8 @@ api-version: '26.3'
 load: POSTWORLD
 
 prefix: 'Crops'
+
+commands:
+  crops:
+    description: Main command for Crops plugin.
+    usage: /<command>

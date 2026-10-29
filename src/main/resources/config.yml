@@ -1,0 +1,79 @@
+config:
+  reload_permission: 'crops.reload'
+
+behaviour:
+  replanting:
+
+    # Whether auto replanting is enabled, and if so under what condition
+    # Possible values:
+    # - ALWAYS -> All players will have their fully grown crops replanted
+    # - (Any permission here) -> Only players with this permission will have their fully grown crops replanted
+    # - NEVER -> Replanting of fully grown crops is completely disabled
+    #
+    # HINT: Permission values are useful for rank perks!
+    #       To do this, assign a permission here and give it to your rank group.
+    allow_fullygrown_replanting: 'crops.replant'
+
+    # Same as allow_fullygrown_replanting, but for crops which are not fully grown
+    allow_partgrown_replanting: 'crops.replant'
+
+
+  harvesting:
+    # Whether normal harvesting of crops when fully grown is enabled
+    # To prevent Pay to Play gameplay mechanics, we recommend you leave this as ALWAYS.
+    # Possible values:
+    # - ALWAYS -> All players will be able to harvest crops that are fully grown
+    # - (Any permission here) -> Only players with this permission will be able to harvest fully grown crops
+    # - NEVER -> No player can harvest fully grown crops
+    #
+    # WARNING: This only prevents normal harvesting by the player (left click)
+    #          It does not prevent breaking the block below, using water or other methods.
+    allow_fullygrown_harvesting: 'ALWAYS'
+
+    # Same as allow_fullygrown_harvesting, but for crops which are not fully grown
+    allow_partgrown_harvesting: 'ALWAYS'
+
+
+
+
+messages:
+  # Prefix to be used in plugin messages
+  prefix: '&a&lCrops &7» &f'
+
+  # On successful reload
+  reload_success: '&aSuccessfully reloaded configuration!'
+
+  # On no permission on reload
+  reload_no_permission: '&cYou do not have permission to do this.'
+
+  # When a fully grown crop is harvested and also replanted
+  # (By default, crops are only replanted if a seed is in the player's inventory
+  # and the player has the required permission)
+  harvested_replanted: "&2ʜᴀʀᴠᴇsᴛᴇᴅ & ʀᴇᴘʟᴀɴᴛᴇᴅ ᴄʀᴏᴘ!"
+
+  # When a fully grown crop is harvested but NOT replanted
+  harvested: "&aʜᴀʀᴠᴇsᴛᴇᴅ ᴄʀᴏᴘ"
+
+  # When the crop's break event is cancelled because it is not fully grown
+  not_fully_grown: '&cʏᴏᴜ ᴄᴀɴ ᴏɴʟʏ ʜᴀʀᴠᴇsᴛ ғᴜʟʟʏ ɢʀᴏᴡɴ ᴄʀᴏᴘs!'
+
+
+
+
+sounds:
+  # Sound to play when a fully grown crop is harvested and replanted
+  # OFF to disable
+  harvested_replanted: 'ENTITY_EXPERIENCE_ORB_PICKUP'
+
+  # Sound to play when a fully grown crop is harvested
+  # OFF to disable
+  harvested: 'OFF'
+
+  # Sound to play when crop is not harvested because it is not fully grown
+  # OFF to disable
+  not_fully_grown: 'ENTITY_VILLAGER_NO'
+
+
+
+# Don't change this
+config-version: '0.2.0-beta'
