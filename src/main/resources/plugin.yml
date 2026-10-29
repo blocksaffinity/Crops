@@ -1,0 +1,8 @@
+name: Crops
+version: '${version}'
+
+main: com.blocksaffinity.crops.Crops
+api-version: '26.3'
+load: POSTWORLD
+
+prefix: 'Crops'
