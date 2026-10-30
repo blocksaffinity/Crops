@@ -12,9 +12,11 @@ behaviour:
     #
     # HINT: Permission values are useful for rank perks!
     #       To do this, assign a permission here and give it to your rank group.
+    # [Defaults to crops.replant]
     allow_fullygrown_replanting: 'crops.replant'
 
     # Same as allow_fullygrown_replanting, but for crops which are not fully grown
+    # [Defaults to crops.replant]
     allow_partgrown_replanting: 'crops.replant'
 
 
@@ -28,9 +30,11 @@ behaviour:
     #
     # WARNING: This only prevents normal harvesting by the player (left click)
     #          It does not prevent breaking the block below, using water or other methods.
+    # [Defaults to ALWAYS]
     allow_fullygrown_harvesting: 'ALWAYS'
 
     # Same as allow_fullygrown_harvesting, but for crops which are not fully grown
+    # [Defaults to ALWAYS]
     allow_partgrown_harvesting: 'ALWAYS'
 
 
@@ -41,20 +45,33 @@ messages:
   prefix: '&a&lCrops &7» &f'
 
   # On successful reload
+  # [Defaults to &aReloaded configuration files.]
   reload_success: '&aSuccessfully reloaded configuration!'
 
   # On no permission on reload
+  # [Defaults to &cYou do not have permission to do this.]
   reload_no_permission: '&cYou do not have permission to do this.'
+
+
+  # Controls where harvest+replant, harvest and not fully grown messages display
+  # Choose from:
+  # - CHAT
+  # - ACTIONBAR
+  # [Defaults to Chat]
+  general_messages:
 
   # When a fully grown crop is harvested and also replanted
   # (By default, crops are only replanted if a seed is in the player's inventory
   # and the player has the required permission)
+  # [Defaults to &2Harvested and replanted crop!]
   harvested_replanted: "&2ʜᴀʀᴠᴇsᴛᴇᴅ & ʀᴇᴘʟᴀɴᴛᴇᴅ ᴄʀᴏᴘ!"
 
   # When a fully grown crop is harvested but NOT replanted
+  # [Defaults to &aHarvested crop!]
   harvested: "&aʜᴀʀᴠᴇsᴛᴇᴅ ᴄʀᴏᴘ"
 
   # When the crop's break event is cancelled because it is not fully grown
+  # [Defaults to &cThis crop is not fully grown.]
   not_fully_grown: '&cʏᴏᴜ ᴄᴀɴ ᴏɴʟʏ ʜᴀʀᴠᴇsᴛ ғᴜʟʟʏ ɢʀᴏᴡɴ ᴄʀᴏᴘs!'
 
 
@@ -76,4 +93,4 @@ sounds:
 
 
 # Don't change this
-config-version: '0.2.0-beta'
+config-version: '0.2.1-beta'

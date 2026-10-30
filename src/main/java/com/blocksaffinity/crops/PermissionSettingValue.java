@@ -7,7 +7,7 @@ import org.bukkit.entity.Player;
 // Pretty buns name
 public class PermissionSettingValue {
     public static Boolean parseStringAs(Player player, String string) {
-        if (string.equalsIgnoreCase("ALWAYS") || player.hasPermission(string))
+        if (string.equalsIgnoreCase("ALWAYS"))
         {
             return true;
         }
@@ -15,6 +15,6 @@ public class PermissionSettingValue {
         {
             return false;
         }
-        return false;
+        else return player.hasPermission(string);
     }
 }

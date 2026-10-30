@@ -2,6 +2,7 @@ package com.blocksaffinity.crops;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.PluginCommand;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -30,7 +31,11 @@ public final class Crops extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(cropListener, this);
 
         // set up and register commands
-        this.getCommand("crops").setExecutor(this);
+        PluginCommand cropsCommand = this.getCommand("crops");
+        if (cropsCommand != null)
+        {
+            cropsCommand.setExecutor(this);
+        }
 
         logger.log(Level.INFO, "Enabled plugin.");
     }
@@ -49,7 +54,7 @@ public final class Crops extends JavaPlugin {
         }
 
         if (!sender.hasPermission(config.getString("config.reload_permission", "crops.reload"))) {
-            Utils.sendMessage((Player)sender, prefix + config.getString("messages.reload_no_permission", "You do not have permission to do this."));
+            Utils.sendMessage((Player)sender, prefix + config.getString("messages.reload_no_permission", "&cYou do not have permission to do this."));
             return true;
         }
 
