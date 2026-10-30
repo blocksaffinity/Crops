@@ -78,9 +78,12 @@ messages:
 
 
 sounds:
+  # NOTE: Don't give sounds in the A_B_C format.
+  #       Instead, give your sounds in the format a.b.c
+
   # Sound to play when a fully grown crop is harvested and replanted
   # OFF to disable
-  harvested_replanted: 'ENTITY_EXPERIENCE_ORB_PICKUP'
+  harvested_replanted: 'entity.experience_orb.pickup'
 
   # Sound to play when a fully grown crop is harvested
   # OFF to disable
@@ -88,7 +91,7 @@ sounds:
 
   # Sound to play when crop is not harvested because it is not fully grown
   # OFF to disable
-  not_fully_grown: 'ENTITY_VILLAGER_NO'
+  not_fully_grown: 'entity.villager.no'
 
 
 
