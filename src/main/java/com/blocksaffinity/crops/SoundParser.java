@@ -14,6 +14,13 @@ public class SoundParser {
      * @return A valid org.bukkit.Sound instance, or null if both choices fail
      */
     public static Sound parseSound(String input, String fallback) {
+        // AS I WAS LOOKING THROUGH THIS CODE
+        // I noticed ENTITY_EXPERIENCE_ORB_PICKUP
+        // would be parsed to entity.experience.orb.pickup
+        // WHICH IS NOT A SOUND
+        // so DON'T USE SNAKE CAPS IN CONFIG PLZ
+        // THEY ARE NO LONGER SUPPORTED
+
         // 1. Attempt to parse primary user input
         Sound chosenSound = getSoundFromRegistry(input);
         if (chosenSound != null) {
@@ -41,7 +48,7 @@ public class SoundParser {
 
         // Normalise input: Registry requires lowercase and replaces underscores with dots for vanilla matching
         // e.g., "ENTITY_PLAYER_LEVELUP" -> "entity.player.levelup"
-        String cleaned = rawSound.toLowerCase().trim().replace("_", ".");
+        String cleaned = rawSound.toLowerCase().trim();//.replace("_", ".");
 
         // Handle namespaced structures safely
         NamespacedKey key = NamespacedKey.fromString(cleaned);
