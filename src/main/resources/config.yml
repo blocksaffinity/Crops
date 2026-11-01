@@ -1,23 +1,20 @@
-config:
-  reload_permission: 'crops.reload'
-
 behaviour:
   replanting:
-
     # Whether auto replanting is enabled, and if so under what condition
     # Possible values:
     # - ALWAYS -> All players will have their fully grown crops replanted
-    # - (Any permission here) -> Only players with this permission will have their fully grown crops replanted
+    # - PERMISSION -> Only players with the permission crops.fullygrown_replant will have their fully grown crops replanted
     # - NEVER -> Replanting of fully grown crops is completely disabled
     #
     # HINT: Permission values are useful for rank perks!
     #       To do this, assign a permission here and give it to your rank group.
-    # [Defaults to crops.replant]
-    allow_fullygrown_replanting: 'crops.replant'
+    # [Defaults to PERMISSION]
+    allow_fullygrown_replanting: 'PERMISSION'
 
     # Same as allow_fullygrown_replanting, but for crops which are not fully grown
-    # [Defaults to crops.replant]
-    allow_partgrown_replanting: 'crops.replant'
+    # PERMISSION -> Only players with crops.partgrown_replant will be able to auto replant partly grown crops
+    # [Defaults to PERMISSION]
+    allow_partgrown_replanting: 'PERMISSION'
 
 
   harvesting:
@@ -25,7 +22,7 @@ behaviour:
     # To prevent Pay to Play gameplay mechanics, we recommend you leave this as ALWAYS.
     # Possible values:
     # - ALWAYS -> All players will be able to harvest crops that are fully grown
-    # - (Any permission here) -> Only players with this permission will be able to harvest fully grown crops
+    # - PERMISSION -> Only players with permission crops.fullygrown_harvest will be able to harvest fully grown crops
     # - NEVER -> No player can harvest fully grown crops
     #
     # WARNING: This only prevents normal harvesting by the player (left click)
@@ -34,13 +31,34 @@ behaviour:
     allow_fullygrown_harvesting: 'ALWAYS'
 
     # Same as allow_fullygrown_harvesting, but for crops which are not fully grown
+    # PERMISSION -> Only players with crops.partgrown_harvest will be able to harvest partly grown crops
     # [Defaults to ALWAYS]
     allow_partgrown_harvesting: 'ALWAYS'
+
+
+  customisation:
+    # Growth notifications inform a player that a crop they have placed has grown.
+    # On budget, low-performance hardware, this may cause lag.
+    # It's toggled per-player by /crops toggle growth-notifications
+    # Possible values:
+    # - ALWAYS -> All players can toggle growth notifications
+    # - PERMISSION -> Only players with the permission crops.growth_notifications will be able to toggle
+    # - NEVER -> Growth notifications is fully disabled
+    #
+    # HINT: Permission values are useful for rank perks!
+    #       To do this, assign a permission here and give it to your rank group.
+    # [Defaults to crops.growth_notifications]
+    allow_growth_notifications: crops.growth_notifications
+
 
 
 
 
 messages:
+  # As of plugin version 0.3.0, this configuration section supports the MiniMessage format
+  # However, don't mix it with legacy ampersand symbols
+  # e.g. '&a<bold>hello' will not work
+
   # Prefix to be used in plugin messages
   # [Defaults to &a[Crops] &7> &f ]
   prefix: '&a&lCrops &7» &f '
@@ -93,4 +111,4 @@ sounds:
 
 
 # Don't change this
-config-version: '0.2.1-beta'
+config-version: '0.3.0-beta'

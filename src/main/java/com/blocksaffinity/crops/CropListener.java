@@ -91,14 +91,14 @@ public class CropListener implements Listener {
 
         if (fullyGrown) {
             allowReplanting = PermissionSettingValue.parseStringAs(
-                    player, allowFullygrownReplantingStr);
+                    player, allowFullygrownReplantingStr, "crops.fullygrown_replant");
             allowHarvesting = PermissionSettingValue.parseStringAs(
-                    player, allowFullygrownHarvestingStr);
+                    player, allowFullygrownHarvestingStr, "crops.partgrown_replant");
         } else {
             allowReplanting = PermissionSettingValue.parseStringAs(
-                    player, allowPartgrownReplantingStr);
+                    player, allowPartgrownReplantingStr, "crops.fullygrown_harvest");
             allowHarvesting = PermissionSettingValue.parseStringAs(
-                    player, allowPartgrownHarvestingStr);
+                    player, allowPartgrownHarvestingStr, "crops.partgrown_harvest");
         }
 
         // Replant if permitted and the player has the required item.
