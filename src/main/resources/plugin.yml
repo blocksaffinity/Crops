@@ -1,5 +1,7 @@
 name: Crops
 version: '${version}'
+authors: [blocksaffinity]
+description: 'Free, open source, ultra-lightweight Minecraft: Java Edition plugin providing basic features for crops.'
 
 main: com.blocksaffinity.crops.Crops
 api-version: '26.3'
