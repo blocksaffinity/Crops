@@ -1,5 +1,6 @@
 package com.blocksaffinity.crops;
 
+import io.papermc.paper.command.brigadier.BasicCommand;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.PluginCommand;
@@ -16,6 +17,7 @@ public final class Crops extends JavaPlugin {
     public FileConfiguration config;
     public String prefix;
     public CropListener cropListener;
+    public BasicCommand cropsCommand;
 
     @Override
     public void onEnable() {
@@ -31,41 +33,54 @@ public final class Crops extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(cropListener, this);
 
         // set up and register commands
-        PluginCommand cropsCommand = this.getCommand("crops");
-        if (cropsCommand != null)
-        {
-            cropsCommand.setExecutor(this);
-        }
+        cropsCommand = new CropsCommand(this);
+        this.registerCommand("crops", cropsCommand);
+
+        reload();
 
         logger.log(Level.INFO, "Enabled plugin.");
     }
 
-    @Override
-    public boolean onCommand(@NonNull CommandSender sender, Command command, @NonNull String label, String @NonNull [] args)
+    public void reload()
     {
-        // Reload the config from disk
-        reloadConfig();
-
+        this.reloadConfig();
+        cropListener.reloadConfig();
         config = getConfig();
-        prefix = config.getString("messages.prefix", "&a&lCrops &7» &f");
+        prefix = config.getString("messages.prefix", "&a[Crops] &7> &f");
 
-        if (!command.getName().equalsIgnoreCase("crops")) {
-            return false;
+        // display config warnings
+        if (config.getString("messages.reload_no_permission") != null)
+        {
+            logger.log(Level.WARNING, "messages.reload_no_permission is not used, please remove from your config when possible to avoid accidental misconfigurations.");
         }
-
-        if (!sender.hasPermission(config.getString("config.reload_permission", "crops.reload"))) {
-            Utils.sendMessage((Player)sender, prefix + config.getString("messages.reload_no_permission", "&cYou do not have permission to do this."));
-            return true;
-        }
-
-        // tell listener to reload its cached values
-        cropListener.ReloadConfig();
-
-        Utils.sendMessage(sender, prefix + config.getString("messages.reload_success", "Reloaded configuration files."));
-
-        logger.log(Level.INFO, "Reloaded plugin.");
-        return true;
     }
+
+//    @Override
+//    public boolean onCommand(@NonNull CommandSender sender, Command command, @NonNull String label, String @NonNull [] args)
+//    {
+//        // Reload the config from disk
+//        reloadConfig();
+//
+//        config = getConfig();
+//        prefix = config.getString("messages.prefix", "&a&lCrops &7» &f");
+//
+//        if (!command.getName().equalsIgnoreCase("crops")) {
+//            return false;
+//        }
+//
+//        if (!sender.hasPermission(config.getString("config.reload_permission", "crops.reload"))) {
+//            Utils.sendMessage((Player)sender, prefix + config.getString("messages.reload_no_permission", "&cYou do not have permission to do this."));
+//            return true;
+//        }
+//
+//        // tell listener to reload its cached values
+//        cropListener.reloadConfig();
+//
+//        Utils.sendMessage(sender, prefix + config.getString("messages.reload_success", "Reloaded configuration files."));
+//
+//        logger.log(Level.INFO, "Reloaded plugin.");
+//        return true;
+//    }
 
     @Override
     public void onDisable() {
