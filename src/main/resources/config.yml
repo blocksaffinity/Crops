@@ -42,23 +42,20 @@ behaviour:
 
 messages:
   # Prefix to be used in plugin messages
-  prefix: '&a&lCrops &7» &f'
+  # [Defaults to &a[Crops] &7> &f ]
+  prefix: '&a&lCrops &7» &f '
 
   # On successful reload
-  # [Defaults to &aReloaded configuration files.]
+  # [Defaults to &aSuccessfully reloaded configuration!]
   reload_success: '&aSuccessfully reloaded configuration!'
 
-  # On no permission on reload
+  # On no permission on command
   # [Defaults to &cYou do not have permission to do this.]
-  reload_no_permission: '&cYou do not have permission to do this.'
+  command_no_permission: '&cYou do not have permission to do this.'
 
-
-  # Controls where harvest+replant, harvest and not fully grown messages display
-  # Choose from:
-  # - CHAT
-  # - ACTIONBAR
-  # [Defaults to Chat]
-  general_messages:
+  # On an invalid command, e.g. /crops abc
+  # [Defaults to &cThis command is not valid.]
+  command_invalid: '&cThis command is not valid.'
 
   # When a fully grown crop is harvested and also replanted
   # (By default, crops are only replanted if a seed is in the player's inventory
