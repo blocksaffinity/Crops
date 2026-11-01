@@ -36,10 +36,10 @@ public class CropListener implements Listener {
 
     public CropListener(Crops plugin) {
         this.plugin = plugin;
-        ReloadConfig();
+        reloadConfig();
     }
 
-    public void ReloadConfig() {
+    public void reloadConfig() {
         // behaviour
         allowFullygrownReplantingStr = plugin.config.getString(
                 "behaviour.replanting.allow_fullygrown_replanting", "crops.replant");
