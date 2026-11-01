@@ -1,6 +1,8 @@
 
 package com.blocksaffinity.crops;
 
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
@@ -9,11 +11,14 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockGrowEvent;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 public class CropListener implements Listener {
     private final Crops plugin;
+    private final DatabaseManager db;
 
     // Behaviours from config
     private String allowFullygrownReplantingStr;
@@ -34,8 +39,9 @@ public class CropListener implements Listener {
     private Sound harvestSound;
     private Sound notGrownSound;
 
-    public CropListener(Crops plugin) {
-        this.plugin = plugin;
+    public CropListener(Crops crops, DatabaseManager databaseManager) {
+        this.plugin = crops;
+        this.db = databaseManager;
         reloadConfig();
     }
 
@@ -69,6 +75,52 @@ public class CropListener implements Listener {
         replantSound = SoundParser.parseSound(replantSoundValue, "entity.villager.no");
         harvestSound = SoundParser.parseSound(harvestSoundValue, "entity.villager.no");
         notGrownSound = SoundParser.parseSound(notGrownSoundValue, "entity.villager.no");
+    }
+
+
+    @EventHandler
+    public void onCropPlace(BlockPlaceEvent event) {
+        Block block = event.getBlock();
+        if (block.getBlockData() instanceof Ageable) {
+            db.addCrop(event.getPlayer().getUniqueId(), block.getLocation());
+        }
+    }
+
+
+    @EventHandler
+    public void onCropGrow(BlockGrowEvent event) {
+        Block block = event.getNewState().getBlock();
+
+        if (event.getNewState().getBlockData() instanceof Ageable ageable) {
+            if (ageable.getAge() == ageable.getMaximumAge()) {
+                Location loc = block.getLocation();
+
+                // get who placed the crop
+                db.getCropOwner(loc, uuid -> {
+                    if (uuid == null) return;
+
+                    Player player = Bukkit.getPlayer(uuid);
+                    if (player != null && player.isOnline()) {
+                        if (PermissionSettingValue.parseStringAs(player, plugin.getConfig().getString("behaviour.customisation.allow_growth_notifications", "PERMISSION"), "crops.growth_notifications")) {
+                            final String message = plugin.getConfig().getString("messages.growth_notifications_format", "&fYour crop at x&a%x% &fz&a%z% &fhas just grown!")
+                                    .replace("%x%", Integer.toString(loc.getBlockX()))
+                                    .replace("%y%", Integer.toString(loc.getBlockY()))
+                                    .replace("%z%", Integer.toString(loc.getBlockZ()));
+                            Utils.sendMessage(player, message);
+                        }
+                    }
+                });
+            }
+        }
+    }
+
+
+    @EventHandler
+    public void onCropBreak(BlockBreakEvent event) {
+        Block block = event.getBlock();
+        if (block.getBlockData() instanceof Ageable) {
+            db.removeCrop(block.getLocation());
+        }
     }
 
     @EventHandler

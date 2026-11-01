@@ -39,16 +39,15 @@ behaviour:
   customisation:
     # Growth notifications inform a player that a crop they have placed has grown.
     # On budget, low-performance hardware, this may cause lag.
-    # It's toggled per-player by /crops toggle growth-notifications
     # Possible values:
-    # - ALWAYS -> All players can toggle growth notifications
-    # - PERMISSION -> Only players with the permission crops.growth_notifications will be able to toggle
-    # - NEVER -> Growth notifications is fully disabled
+    # - ALWAYS -> All players receive notifications
+    # - PERMISSION -> Only players with the permission crops.growth_notifications will receive these notifications
+    # - NEVER -> Growth notifications are fully disabled
     #
     # HINT: Permission values are useful for rank perks!
     #       To do this, assign a permission here and give it to your rank group.
-    # [Defaults to crops.growth_notifications]
-    allow_growth_notifications: crops.growth_notifications
+    # [Defaults to PERMISSION]
+    allow_growth_notifications: 'PERMISSION'
 
 
 
@@ -74,6 +73,12 @@ messages:
   # On an invalid command, e.g. /crops abc
   # [Defaults to &cThis command is not valid.]
   command_invalid: '&cThis command is not valid.'
+
+  # Format for growth notifications
+  # You may use %x%, %y% and %z% as placeholders
+  # [Defaults to &fYour crop at x&a%x% &fz&a%z% &fhas just grown!]
+  growth_notifications_format: '&fYour crop at x&a%x% &fz&a%z% &fhas just grown!'
+
 
   # When a fully grown crop is harvested and also replanted
   # (By default, crops are only replanted if a seed is in the player's inventory

@@ -1,13 +1,11 @@
 package com.blocksaffinity.crops;
 
+import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import io.papermc.paper.command.brigadier.BasicCommand;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandSender;
-import org.bukkit.command.PluginCommand;
+import io.papermc.paper.command.brigadier.CommandSourceStack;
+import io.papermc.paper.command.brigadier.Commands;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.jspecify.annotations.NonNull;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -18,6 +16,7 @@ public final class Crops extends JavaPlugin {
     public String prefix;
     public CropListener cropListener;
     public BasicCommand cropsCommand;
+    public DatabaseManager databaseManager;
 
     @Override
     public void onEnable() {
@@ -26,15 +25,25 @@ public final class Crops extends JavaPlugin {
 
         logger = this.getLogger();
         config = this.getConfig();
+        databaseManager = new DatabaseManager(this);
         prefix = config.getString("messages.prefix", "&a&lCrops &7» &f");
 
+        // set up db
+        this.saveResource("data.db", false);
+        databaseManager.connect();
+
         // set up and register listeners
-        cropListener = new CropListener(this);
+        cropListener = new CropListener(this, databaseManager);
         this.getServer().getPluginManager().registerEvents(cropListener, this);
 
         // set up and register commands
         cropsCommand = new CropsCommand(this);
         this.registerCommand("crops", cropsCommand);
+
+        LiteralArgumentBuilder<CommandSourceStack> root = Commands.literal("crops");
+        root.then(Commands.literal("reload"));
+        root.then(Commands.literal("help"));
+        root.then(Commands.literal("toggle"));
 
         reload();
 
@@ -52,6 +61,10 @@ public final class Crops extends JavaPlugin {
         if (config.getString("messages.reload_no_permission") != null)
         {
             logger.log(Level.WARNING, "messages.reload_no_permission is not used, please remove from your config when possible to avoid accidental misconfigurations.");
+        }
+        if (config.getString("config.reload_permission") != null)
+        {
+            logger.log(Level.WARNING, "config.reload_permission is not used, please remove from your config when possible to avoid accidental misconfigurations.");
         }
     }
 
