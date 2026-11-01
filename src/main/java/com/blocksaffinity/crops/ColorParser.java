@@ -3,8 +3,6 @@ package com.blocksaffinity.crops;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
-//import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class ColorParser {
 
@@ -53,11 +51,15 @@ public class ColorParser {
         // 2. Deserialize the legacy formatting into a Component
         Component legacyParsed = LegacyComponentSerializer.legacyAmpersand().deserialize(input);
 
-        // 3. Serialize that Component into pure MiniMessage tags
-        // This safely converts codes like &c into <red>
-        String pureMiniMessage = MiniMessage.miniMessage().serialize(legacyParsed);
+        // EDIT: we actually don't need to do all this
+        // just return that component now
+        return legacyParsed;
 
-        // 4. Finally, deserialize the unified MiniMessage string into the final Component
-        return MiniMessage.miniMessage().deserialize(pureMiniMessage);
+//        // 3. Serialize that Component into pure MiniMessage tags
+//        // This safely converts codes like &c into <red>
+//        String pureMiniMessage = MiniMessage.miniMessage().serialize(legacyParsed);
+//
+//        // 4. Finally, deserialize the unified MiniMessage string into the final Component
+//        return MiniMessage.miniMessage().deserialize(pureMiniMessage);
     }
 }

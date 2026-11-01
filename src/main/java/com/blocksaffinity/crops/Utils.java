@@ -24,7 +24,6 @@ public class Utils {
 
     public static void sendMessage(Player player, String content)
     {
-        // No
         Component formated_content = ColorParser.parse(content);
         player.sendMessage(formated_content);
     }
